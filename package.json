@@ -1,0 +1,13 @@
+{
+  "name": "spambot",
+  "version": "1.0.0",
+  "description": "Skaytacium's spambot",
+  "main": "index.ts",
+  "author": "Skaytacium",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "discord.js": "11.6.4"
+  },
+  "dependencies": {}
+}
