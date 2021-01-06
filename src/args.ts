@@ -1,5 +1,15 @@
 import yargs from 'yargs/yargs';
 
+function parse(parameter: unknown[]): {} {
+    let tempObj: any;
+
+    for (let i = 0; i < parameter.length; i += 2) {
+        console.log(tempObj);
+    }
+
+    return tempObj;
+}
+
 export const args = yargs(process.argv)
     .options({
         "time": {
@@ -15,7 +25,8 @@ export const args = yargs(process.argv)
         "list": {
             alias: 'l',
             describe: "An entire list containing <msg> <time> ... <msg> <time> values, useful for specific timing",
-            type: 'array'
+            type: 'array',
+            coerce: parse
         },
         "count": {
             alias: "c",
@@ -23,10 +34,11 @@ export const args = yargs(process.argv)
             type: 'boolean'
         }
     })
-    .alias('help', 'h')
     .check(argv => {
-        if (!argv.list && !argv.msg)
-            console.log("Required 1 or more arguments, 0 found\nProvide a message or list"); return true;
+        if (!argv.list && !argv.msg) {
+            console.log("Required 1 or more arguments, 0 found\nProvide a message or list");
+            process.exit(1);
+        } else return true
     })
     .help()
     .argv
