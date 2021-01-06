@@ -1,15 +1,13 @@
 export class Controller {
-    msgArray;
-    time;
+    msgList;
     count;
 
-    constructor(msgArray: string | string[], time: number | number[], count?: boolean) {
-        this.msgArray = msgArray;
-        this.time = time;
-        this.count = count;
+    constructor(msgList: {[key: string]: number}, count?: boolean) {
+        this.msgList = msgList;
+        if (count) this.count = count;
     }
 }
 
 export function start(controller: Controller) {
-
+    console.log(controller);
 }

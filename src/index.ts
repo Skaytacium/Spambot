@@ -8,9 +8,7 @@ const client = new Client();
 //     .then(() => console.log("Succesfully logged in."))
 //     .catch(() => console.log("Couldn't log in, check your credentials."));
 
-args;
-
-// messenger.start(new messenger.Controller(, 60))
+messenger.start(new messenger.Controller(args.list ? args.list : process.exit(1)))
 
 client.on('message', (message) => {
     if (message.content == config.start) {
