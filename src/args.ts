@@ -1,6 +1,6 @@
 import yargs from 'yargs/yargs';
 
-function parse(parameter: unknown[]): {} {
+function parse(parameter: unknown[]): any[] {
     let tempObj: any;
 
     for (let i = 0; i < parameter.length; i += 2) {
