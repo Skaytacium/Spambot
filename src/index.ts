@@ -8,7 +8,8 @@ const client = new Client();
 //     .then(() => console.log("Succesfully logged in."))
 //     .catch(() => console.log("Couldn't log in, check your credentials."));
 
-console.log(args.list)
+//@ts-ignore DUDE I AM CHECKING IF ITS NULL IN ARGS.TS BUDDY HELLO TYPESCRIPT BRUH?
+messenger.start(new messenger.Controller(args.list, true, args.count));
 
 client.on('message', (message) => {
     if (message.content == config.start) {
