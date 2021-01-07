@@ -1,6 +1,6 @@
 import yargs from 'yargs/yargs';
 
-function parse(list: string[] | number[]): { [key: string]: number } {
+function parse(list: any[], times?: number[]): { [key: string]: number } {
     let tempObj: { [key: string]: number } = {};
 
     for (let i = 0; i < list.length; i++) {
@@ -42,7 +42,7 @@ export const args = yargs(process.argv)
     .coerce('list', parse)
     .check(argv => {
         if (!argv.list && !argv.msg) {
-            throw new Error("Required 1 or more arguments, 0 found\nProvide a message or list\n");
+            throw new Error("Required 1 or more arguments, 0 found.\nProvide a message or list.");
         } else return true;
     })
     .help(true)

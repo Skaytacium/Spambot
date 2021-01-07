@@ -1,3 +1,11 @@
 {
-    "token": "string"
+    "token": "YOUR TOKEN HERE",
+    "start": "here we go",
+    "defdelay": 60,
+    "options": {
+        "memechars": "frick"
+    },
+    "times": {
+        "beg": 45
+    }
 }
