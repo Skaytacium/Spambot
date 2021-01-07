@@ -42,9 +42,8 @@ export const args = yargs(process.argv)
     .coerce('list', parse)
     .check(argv => {
         if (!argv.list && !argv.msg) {
-            console.log("Required 1 or more arguments, 0 found\nProvide a message or list");
-            process.exit(1);
-        } else return true
+            throw new Error("Required 1 or more arguments, 0 found\nProvide a message or list\n");
+        } else return true;
     })
     .help(true)
     .argv
