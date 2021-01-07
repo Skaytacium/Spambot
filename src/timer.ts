@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 
-export class Timer extends Promise {
+export class Timer<T> extends Promise<T> {
     readonly timers: { [id: string]: number } = {};
 
     constructor(cb: (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void) {
@@ -23,9 +23,7 @@ export class Timer extends Promise {
 
         else return new Promise(res => {
 
-            this.timers.push(id);
             this.sleep(() => {
-                this.emit(id);
                 res(id);
             }, time);
 
@@ -40,4 +38,11 @@ export class Timer extends Promise {
 
 export class Plate extends EventEmitter {
 
+    constructor() {
+        super()
+    }
+
+    add(id: string) {
+        new Timer()
+    }
 }
