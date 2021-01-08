@@ -1,4 +1,4 @@
-console.log("Initializing...");
+console.log("Starting...");
 
 import { Client } from 'discord.js';
 import { start, token } from '../config/config.json';

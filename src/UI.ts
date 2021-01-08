@@ -5,6 +5,10 @@ export class UIEvents extends EventEmitter {
     constructor(prompt?: string, tabsize?: number) {
         super()
 
+        console.log(`
+        Created a new user interface with prompt ${prompt ? prompt : '<none>'} and tabsize ${tabsize ? tabsize : 4}`
+        );
+        
         createInterface({
             input: process.stdin,
             output: process.stdout,

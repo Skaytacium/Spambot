@@ -17,6 +17,9 @@ export class Messenger {
                 else if (!this.msgList[msg]) this.msgList[msg] = time ? time : defdelay;
             }
         }
+
+        console.log(`Created a new message manager with ${"bur"} messages, \
+${time ? `a time of ${time}` : `default timings`} and ${count ? "counting turned on" : "counting turned off"}`);
     }
 
     start() {
