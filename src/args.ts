@@ -40,7 +40,7 @@ in the config if specified, or the default time.",
         },
         "verbose": {
             alias: 'v',
-            describe: "Show INFO parameters",
+            describe: "Show more INFO, literally",
             type: 'boolean'
         }
     })
