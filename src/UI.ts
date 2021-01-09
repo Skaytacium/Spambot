@@ -10,8 +10,8 @@ export class UIEvents extends EventEmitter {
 
         this.verbose = verbose;
 
-        if (this.verbose) console.log(`
-        INFO: Created a new user interface with prompt ${prompt ? prompt : '<none>'} and tabsize ${tabsize ? tabsize : 4}`
+        if (this.verbose) console.log(
+`INFO: Created a new user interface with prompt ${prompt ? prompt : '<none>'} and tabsize ${tabsize ? tabsize : 4}`
         );
 
         createInterface({

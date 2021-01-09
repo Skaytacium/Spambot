@@ -31,7 +31,7 @@ ${time ? `a time of ${time}` : `default timings`} and ${count ? "counting turned
 
     start() {
         for (const msg in this.msgList) {
-            console.log(msg);
+            this.plate.add(msg, this.msgList[msg] * 60000);
         }
     }
 }

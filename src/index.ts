@@ -12,8 +12,9 @@ const client = new Client();
 
 const messenger = new Messenger( //@ts-ignore DUDE I AM CHECKING IF ITS NULL IN ARGS.TS BUDDY HELLO TYPESCRIPT BRUH?
     args.list ? args.list : args.msg,
+    args.verbose,
     args.msg ? args.time : undefined,
-    args.count
+    args.count,
 );
 messenger.start();
 
