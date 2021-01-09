@@ -6,9 +6,9 @@ import { args } from './args';
 import { Messenger } from './messenger';
 
 const client = new Client();
-// client.login(token)
-//     .then(() => console.log("Succesfully logged in."))
-//     .catch(() => console.log("Couldn't log in, check your credentials."));
+client.login(token)
+    .then(() => console.log("Succesfully logged in."))
+    .catch(() => console.log("Couldn't log in, check your credentials."));
 
 const messenger = new Messenger( //@ts-ignore DUDE I AM CHECKING IF ITS NULL IN ARGS.TS BUDDY HELLO TYPESCRIPT BRUH?
     args.list ? args.list : args.msg,
@@ -16,7 +16,6 @@ const messenger = new Messenger( //@ts-ignore DUDE I AM CHECKING IF ITS NULL IN 
     args.msg ? args.time : undefined,
     args.count,
 );
-messenger.start();
 
 client.on('message', (message) => {
     if (message.content == start) {
@@ -28,4 +27,6 @@ client.on('message', (message) => {
         message.delete();
         messenger.start();
     }
+
+    messenger.on('send', val => message.channel.send(val));
 });
