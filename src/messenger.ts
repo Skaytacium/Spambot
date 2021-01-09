@@ -1,14 +1,18 @@
 import { times, defdelay } from '../config/config.json'
 import { UIEvents } from './UI'
-import { Plate } from './timer'
+import { Plate } from './plate'
 
 export class Messenger {
     msgList;
     count;
     verbose;
+    plate;
+    ui;
 
     constructor(paramList: { [key: string]: number }, verbose: boolean, time?: number, count?: boolean) {
         this.verbose = verbose;
+        this.plate = new Plate(verbose);
+        this.ui = new UIEvents(verbose);
 
         if (count) this.count = count;
 
@@ -26,6 +30,8 @@ ${time ? `a time of ${time}` : `default timings`} and ${count ? "counting turned
     }
 
     start() {
-        console.log(this);
+        for (const msg in this.msgList) {
+            console.log(msg);
+        }
     }
 }

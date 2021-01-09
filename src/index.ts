@@ -15,6 +15,7 @@ const messenger = new Messenger( //@ts-ignore DUDE I AM CHECKING IF ITS NULL IN 
     args.msg ? args.time : undefined,
     args.count
 );
+messenger.start();
 
 client.on('message', (message) => {
     if (message.content == start) {
