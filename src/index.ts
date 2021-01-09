@@ -1,4 +1,4 @@
-console.log("Starting...");
+console.log("INFO: Starting...");
 
 import { Client } from 'discord.js';
 import { start, token } from '../config/config.json';
@@ -18,7 +18,7 @@ const messenger = new Messenger( //@ts-ignore DUDE I AM CHECKING IF ITS NULL IN 
 
 client.on('message', (message) => {
     if (message.content == start) {
-        console.log(`Received command at ${Date()} in ${message.channel.type == "text" //@ts-ignore	
+        console.log(`INFO: Received command at ${Date()} in ${message.channel.type == "text" //@ts-ignore	
             ? `channel ${message.channel.name}.` //I think TS doesn't know about if statements
             : `a DM channel.`
             }`);

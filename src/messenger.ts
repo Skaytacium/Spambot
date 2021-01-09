@@ -1,12 +1,15 @@
 import { times, defdelay } from '../config/config.json'
 import { UIEvents } from './UI'
-import { Timer } from './timer'
+import { Plate } from './timer'
 
 export class Messenger {
     msgList;
     count;
+    verbose;
 
-    constructor(paramList: { [key: string]: number }, time?: number, count?: boolean) {
+    constructor(paramList: { [key: string]: number }, verbose: boolean, time?: number, count?: boolean) {
+        this.verbose = verbose;
+
         if (count) this.count = count;
 
         else {
@@ -18,7 +21,7 @@ export class Messenger {
             }
         }
 
-        console.log(`Created a new message manager with ${"bur"} messages, \
+        if (this.verbose) console.log(`INFO: Created a new message manager with ${"bur"} messages, \
 ${time ? `a time of ${time}` : `default timings`} and ${count ? "counting turned on" : "counting turned off"}`);
     }
 

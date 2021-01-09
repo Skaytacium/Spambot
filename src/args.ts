@@ -37,6 +37,11 @@ in the config if specified, or the default time.",
             alias: "c",
             describe: "Specify to count from 1 to infinity and beyond",
             type: 'boolean'
+        },
+        "verbose": {
+            alias: 'v',
+            describe: "Show INFO parameters",
+            type: 'boolean'
         }
     })
     .coerce(['list', 'msg'], parse)
