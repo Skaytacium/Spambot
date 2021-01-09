@@ -1,38 +1,33 @@
 import { EventEmitter } from 'events';
 
-export class Timer<T> extends Promise<T> {
-    id: any;
+export class Timer extends Promise<undefined>{
+    id: string;
     time;
 
     constructor(
-        cb: (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void,
         time: number,
-        id: any,
+        id: string,
     ) {
-        super(cb)
+        super((res) => { Timer.sleep(time); res(undefined); });
 
         this.time = time;
         this.id = id;
         console.log(`Created a new timer with time ${time} and id ${id}`);
     }
 
-    sleep(callback: () => void, ms: number) {
+    static sleep(ms: number) {
         const date = Date.now();
-        let cur = date + ms;
+        let future = date + ms;
 
-        while (cur - date > 0)
-            cur = Date.now();
+        while (future - date > 0)
+            future = Date.now();
 
-        callback();
-    }
-
-    pause() {
-        //TODO
-        return "TODO";
+        return true;
     }
 }
 
 export class Plate extends EventEmitter {
+    readonly timers: { [id: string]: Timer } = {};
 
     constructor() {
         super()
@@ -40,7 +35,19 @@ export class Plate extends EventEmitter {
         console.log("Created a new Plate.");
     }
 
-    add(id?: string) {
-        //new Timer(res => )
+    add(id: string, time: number) {
+        this.timers[id] = new Timer(time, id);
+        this.emit('add', [id, time]);
+        console.log("Added a new timer with id " + id + " and time " + time); //I felt like using +
+    }
+
+    del(id: string) {
+        if (this.timers[id]) {
+            delete this.timers[id];
+            this.emit('del', id);
+            console.log("Deleted timer " + id);
+        } else {
+            console.error("Couldn't find timer with id " + id);
+        }
     }
 }
