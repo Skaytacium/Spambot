@@ -1,1 +1,0 @@
-npx babel .\src\ -d .\build\ -x .ts
