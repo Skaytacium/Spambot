@@ -26,7 +26,8 @@ export class Plate extends EventEmitter {
         if (this.timers[id]) {
             this.timers[id].pause();
 
-            console.log("SUCCESS: Paused timer " + id + " with time remaining " + this.timers[id].rem + '.');
+            if (this.verbose)
+                console.log("SUCCESSINFO: Paused timer " + id + " with time remaining " + this.timers[id].rem + '.');
             this.emit('pause', id);
 
             return true;
@@ -43,7 +44,9 @@ export class Plate extends EventEmitter {
 
     private done(id: string, wasPaused?: boolean) {
         if (this.timers[id]) {
-            console.log("SUCCESS: Timer with ID " + id + " is done.");
+            if (this.verbose)
+                console.log("SUCCESSINFO: Timer with ID " + id + " is done.");
+
             this.emit('fin', id);
 
             if (wasPaused) this.timers[id].rem = this.timers[id].set;
@@ -64,7 +67,9 @@ export class Plate extends EventEmitter {
         if (!this.timers[id].running) {
             this.add(id, this.timers[id].rem);
 
-            console.log("SUCCESS: Resumed timer " + id + " with time remaining " + this.timers[id].rem + '.');
+            if (this.verbose)
+                console.log("SUCCESSINFO: Resumed timer " + id + " with time remaining " + this.timers[id].rem + '.');
+
             this.emit('res', id);
 
             return true;
@@ -82,8 +87,9 @@ export class Plate extends EventEmitter {
     del(id: string) {
         if (this.timers[id]) {
             delete this.timers[id];
+            if (this.verbose)
+                console.log("SUCCESSINFO: Deleted timer " + id + ".");
 
-            console.log("SUCCESS: Deleted timer " + id + ".");
             this.emit('del', id);
 
             return true;

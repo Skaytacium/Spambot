@@ -11,9 +11,9 @@ let store: {
 };
 const client = new Client();
 
-// client.login(token)
-//     .then(() => console.log("SUCCESS: Succesfully logged in."))
-//     .catch(() => console.log("ERROR: Couldn't log in, check your credentials."));
+client.login(token)
+    .then(() => console.log("SUCCESS: Succesfully logged in."))
+    .catch(() => console.log("ERROR: Couldn't log in, check your credentials."));
 
 const messenger = new Messenger( //@ts-ignore DUDE I AM CHECKING IF ITS NULL IN ARGS.TS BUDDY HELLO TYPESCRIPT BRUH?
     args.list ? args.list : args.msg,
@@ -22,18 +22,19 @@ const messenger = new Messenger( //@ts-ignore DUDE I AM CHECKING IF ITS NULL IN 
     args.count,
 );
 
-messenger.start();
-
 messenger.on('send', msg => {
-    console.log(msg);
+    store.channel.send(msg).then(sentmsg => {
+        if (args.verbose) console.log("SUCCESSINFO: Sent message " + sentmsg.content);
+    });
 });
 
 client.on('message', (message) => {
     if (message.content == start) {
-        console.log(`INFO: Received command at ${Date()} in ${message.channel.type == "text" //@ts-ignore	
-            ? `channel ${message.channel.name}.` //I think TS doesn't know about if statements
-            : `a DM channel.`
-            }`);
+        if (args.verbose)
+            console.log(`INFO: Received command at ${Date()} in ${message.channel.type == "text" //@ts-ignore	
+                ? `channel ${message.channel.name}.` //I think TS doesn't know about if statements
+                : `a DM channel.`
+                }`);
 
         message.delete();
         messenger.start();

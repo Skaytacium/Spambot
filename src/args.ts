@@ -23,12 +23,13 @@ export const args = yargs(process.argv)
     .options({
         "time": {
             alias: "t",
-            describe: "Time to wait between each message, acts as defdelay if using --list",
+            describe: "(Recommended, not necessary) Time to wait between each message. \
+Also an alternative to defdelay in config.",
             type: 'number'
         },
         "msg": {
             alias: "m",
-            describe: "The array of messages to send",
+            describe: "(Use for simpler spams) The array of messages to send",
             type: 'array'
         },
         "list": {
@@ -50,7 +51,8 @@ in the config if specified, or the default time. Use '' or \"\" to include numbe
         },
         "verbose": {
             alias: 'v',
-            describe: "Show more INFO, literally",
+            describe: "(Recommended for most people) Show more INFO, literally. If you don't like \
+seeing too much text or it gives you a headache, don't use this.",
             type: 'boolean'
         }
     })
