@@ -11,7 +11,7 @@ export class UIEvents extends EventEmitter {
         this.verbose = verbose;
 
         if (this.verbose) console.log(
-`INFO: Created a new user interface with prompt ${prompt ? prompt : '<none>'} and tabsize ${tabsize ? tabsize : 4}`
+`INFO: Created a new user interface with prompt ${prompt ? prompt : '<none>'} and tabsize ${tabsize ? tabsize : 4}.`
         );
 
         createInterface({
@@ -32,7 +32,7 @@ export class UIEvents extends EventEmitter {
                         if (msg[1]) {
 
                             if (this.verbose) console.log("INFO: Paused spamming, type resume or continue to resume.");
-                            this.emit('pause');
+                            this.emit('pause', msg[1]);
 
                         } else console.error("Provide an ID or specify 'all'.");
                         break;
@@ -41,7 +41,7 @@ export class UIEvents extends EventEmitter {
                         if (msg[1]) {
 
                             if (this.verbose) console.log("INFO: Resumed spamming.");
-                            this.emit('res');
+                            this.emit('res', msg[1]);
 
                         } else console.error("Provide an ID.")
                         break;
@@ -50,7 +50,7 @@ export class UIEvents extends EventEmitter {
                         if (msg[1]) {
 
                             if (this.verbose) console.log("INFO: Added " + msg[1]);
-                            this.emit('add');
+                            this.emit('add', msg[1]);
 
                         } else console.error("Provide an ID.")
                         break;
@@ -59,7 +59,7 @@ export class UIEvents extends EventEmitter {
                         if (msg[1]) {
 
                             if (this.verbose) console.log("INFO: Removed " + msg[1]);
-                            this.emit('del');
+                            this.emit('del', msg[1]);
 
                         } else console.error("Provide an ID or specify 'all'")
                         break;

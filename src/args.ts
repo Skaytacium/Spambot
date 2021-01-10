@@ -8,7 +8,7 @@ function parse(list: any[], allString?: boolean): { [key: string]: number } {
         if (allString) {
             tempObj[list[i].toString()] = 0;
         }
-        
+
         else if (typeof list[i] == 'string') {
             if (typeof list[i + 1] == 'number') { tempObj[list[i]] = list[i + 1]; i++; }
 
@@ -23,7 +23,7 @@ export const args = yargs(process.argv)
     .options({
         "time": {
             alias: "t",
-            describe: "Time to wait between each message",
+            describe: "Time to wait between each message, acts as defdelay if using --list",
             type: 'number'
         },
         "msg": {
@@ -43,6 +43,11 @@ in the config if specified, or the default time. Use '' or \"\" to include numbe
             describe: "Specify to count from 1 to infinity and beyond",
             type: 'boolean'
         },
+        "suppress": {
+            alias: 'w',
+            describe: "(Not recommended) Suppress warnings",
+            type: 'boolean'
+        },
         "verbose": {
             alias: 'v',
             describe: "Show more INFO, literally",
@@ -53,13 +58,14 @@ in the config if specified, or the default time. Use '' or \"\" to include numbe
     .coerce('msg', msgs => parse(msgs, true))
     .check(argv => {
         if (!argv.list && !argv.msg)
-            throw new Error("Required 1 or more arguments, 0 found. Provide a message or list.");
+            throw new Error("ERROR: Required 1 or more arguments, 0 found. Provide a message or list.");
 
-        else if (argv.msg && !argv.time) {
-            console.error("Didn't specify a time parameter. Using defdelay in config.");
+        else if (!argv.suppress && !argv.time) {
+            console.error("WARNING: Didn't specify a --time parameter. Using defdelay in config.");
             return true;
+        }
 
-        } else return true;
+        else return true;
     })
     .help(true)
     .argv
