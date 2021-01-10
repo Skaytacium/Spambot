@@ -8,7 +8,7 @@ Pretty self explanatory. Can compile with Babel (to compile with this, uncomment
 
 Lots of features, TODO includes better README but I will probably make someone else do that.
 
-For now you can use --help while running it to see the parameters.
+For now you can use `--help` while running it to see the parameters.
 
 Once started, you can also run `help` to see the available commands, except exit, they do nothing.
 
