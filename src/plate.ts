@@ -12,14 +12,14 @@ export class Plate extends EventEmitter {
         if (this.verbose) console.log("INFO: Created a new Plate.");
     }
 
-    add(id: string, time: number) {
+    async add(id: string, time: number) {
         this.timers[id] = new Timer(time);
         this.emit('add', [id, time]);
 
-        //@ts-ignore You're right, but this scenario will never occur, SO SHUT UP
-        this.timers[id].start().then(() => this.done(id));
-
         if (this.verbose) console.log("INFO: Added a new timer with ID " + id + " and time " + time + ".");//I felt like using +
+        
+        //@ts-ignore You're right, but this scenario will never occur, SO SHUT UP
+        return this.timers[id].start().then(() => this.done(id));
     }
 
     pause(id: string) {

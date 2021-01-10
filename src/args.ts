@@ -1,14 +1,19 @@
 import yargs from 'yargs/yargs';
 
-function parse(list: any[], times?: number[]): { [key: string]: number } {
+function parse(list: any[], allString?: boolean): { [key: string]: number } {
     let tempObj: { [key: string]: number } = {};
 
     for (let i = 0; i < list.length; i++) {
-        
-        if (typeof list[i] == 'string') //@ts-ignore TYPESCRIPT I AM CHECKING IF ITS A GODDAMN STRING YOU RETARDED PIECE OF SHIT
-            tempObj[list[i]] = typeof list[i + 1] == 'number' ? list[i + 1] : 0;
 
-        else tempObj[list[i]] = 0;
+        if (allString) {
+            tempObj[list[i].toString()] = 0;
+        }
+        
+        else if (typeof list[i] == 'string') {
+            if (typeof list[i + 1] == 'number') { tempObj[list[i]] = list[i + 1]; i++; }
+
+            else tempObj[list[i]] = 0;
+        }
     }
 
     return tempObj;
@@ -28,9 +33,9 @@ export const args = yargs(process.argv)
         },
         "list": {
             alias: 'l',
-            describe: "(Recommended) An entire list containing <msg> <time> ... <msg> <time> values,\
-useful for specific timing. You can only send <msg> values, which will use the value of the times field\
-in the config if specified, or the default time.",
+            describe: "(Recommended) An entire list containing <msg> <time> ... <msg> <time> values.\
+You can also only send <msg> values, which will use the value of the times field\
+in the config if specified, or the default time. Use '' or \"\" to include numbers in <msg>",
             type: 'array'
         },
         "count": {
@@ -44,7 +49,8 @@ in the config if specified, or the default time.",
             type: 'boolean'
         }
     })
-    .coerce(['list', 'msg'], parse)
+    .coerce('list', list => parse(list, false))
+    .coerce('msg', msgs => parse(msgs, true))
     .check(argv => {
         if (!argv.list && !argv.msg)
             throw new Error("Required 1 or more arguments, 0 found. Provide a message or list.");

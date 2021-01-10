@@ -1,14 +1,19 @@
 console.log("INFO: Starting...");
 
-import { Client } from 'discord.js';
+import { Client, DMChannel, GroupDMChannel, TextChannel, User } from 'discord.js';
 import { start, token } from '../config/config.json';
 import { args } from './args';
 import { Messenger } from './messenger';
 
+let store: {
+    channel: TextChannel | DMChannel | GroupDMChannel,
+    author: User
+};
 const client = new Client();
-client.login(token)
-    .then(() => console.log("Succesfully logged in."))
-    .catch(() => console.log("Couldn't log in, check your credentials."));
+
+// client.login(token)
+//     .then(() => console.log("SUCCESS: Succesfully logged in."))
+//     .catch(() => console.log("ERROR: Couldn't log in, check your credentials."));
 
 const messenger = new Messenger( //@ts-ignore DUDE I AM CHECKING IF ITS NULL IN ARGS.TS BUDDY HELLO TYPESCRIPT BRUH?
     args.list ? args.list : args.msg,
@@ -16,6 +21,11 @@ const messenger = new Messenger( //@ts-ignore DUDE I AM CHECKING IF ITS NULL IN 
     args.msg ? args.time : undefined,
     args.count,
 );
+
+messenger.on('send', msg => {
+    console.log(msg);
+    console.log(store);
+});
 
 client.on('message', (message) => {
     if (message.content == start) {
@@ -26,7 +36,10 @@ client.on('message', (message) => {
 
         message.delete();
         messenger.start();
-    }
 
-    messenger.on('send', val => message.channel.send(val));
+        store = {
+            channel: message.channel,
+            author: message.author
+        }
+    }
 });
