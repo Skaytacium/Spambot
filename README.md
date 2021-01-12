@@ -20,7 +20,11 @@ The most powerful and elegant discord.js spambot. It has features ranging from s
 4. How to compile to javascript:
     - npm users: `npx babel src -d build -x .ts`
     - yarn users: `yarn babel src -d build -x .ts`
-5. Run `node build --help` to get started or look [HELP.md](here) *TODO*
+5. Run `node build --help` to get started or look [here](HELP.md) *TODO*
+
+### Developing
+
+Look over [here](DEVELOP.md)
 
 ### Notice
 
