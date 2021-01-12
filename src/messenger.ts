@@ -42,14 +42,14 @@ export class Messenger extends EventEmitter {
                     this.msgList[msg] = times[msg] * 1000;
 
                 else if (!this.msgList[msg])
-                    this.msgList[msg] = this.newTime * 1000;
+                    this.msgList[msg] = this.newTime;
             }
         }
 
         if (this.verbose) console.log( //@ts-ignore yeah ok this is right but i'll change this later
             `INFO: Created a new message manager with ${count ? "" : `${objsize(this.msgList)} message(s), `}
     a default time of ${time ? `${time}s` : `defdelay (${defdelay}s)`}, \
-initializing time of ${this.init}s and \
+initializing time of ${this.init}ms and \
 ${count ? "counting turned on." : "counting turned off."}`);
     }
 

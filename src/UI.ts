@@ -30,8 +30,6 @@ export class UIEvents extends EventEmitter {
 
                     case (commands.pause.includes(msg[0])):
                         if (msg[1]) {
-
-                            if (this.verbose) console.log("INFO: Paused spamming, type resume or continue to resume.");
                             msg.splice(0, 1);
                             this.emit('ui', 'pause', msg);
 
@@ -40,8 +38,6 @@ export class UIEvents extends EventEmitter {
 
                     case (commands.resume.includes(msg[0])):
                         if (msg[1]) {
-
-                            if (this.verbose) console.log("INFO: Resumed spamming.");
                             msg.splice(0, 1);
                             this.emit('ui', 'res', msg);
 
@@ -50,8 +46,6 @@ export class UIEvents extends EventEmitter {
 
                     case (commands.add.includes(msg[0])):
                         if (msg[1]) {
-
-                            if (this.verbose) console.log("INFO: Added " + msg[1]);
                             msg.splice(0, 1);
                             this.emit('ui', 'add', msg);
 
@@ -60,8 +54,6 @@ export class UIEvents extends EventEmitter {
 
                     case (commands.delete.includes(msg[0])):
                         if (msg[1]) {
-
-                            if (this.verbose) console.log("INFO: Removed " + msg[1]);
                             msg.splice(0, 1);
                             this.emit('ui', 'del', msg);
 

@@ -24,19 +24,21 @@ export class Plate extends EventEmitter {
 
     pause(id: string) {
         if (this.timers[id]) {
-            this.timers[id].pause();
+            if (this.timers[id]) {
+                this.timers[id].pause();
 
-            if (this.verbose)
-                console.log("SUCCESSINFO: Paused timer " + id + " with time remaining " + this.timers[id].rem + '.');
-            this.emit('pause', id);
+                if (this.verbose)
+                    console.log("SUCCESSINFO: Paused timer " + id + " with time remaining " + this.timers[id].rem + 'ms.');
+                this.emit('pause', id);
 
-            return true;
-        } else if (!this.timers[id].running) {
-            console.error("ERROR: Timer with ID " + id + " is already paused.");
+                return true;
+            } else if (this.timers[id] && !this.timers[id].running) {
+                console.error("ERROR: Timer with ID " + id + " is already paused.");
 
-            return false;
+                return false;
+            }
         } else {
-            console.error("ERROR: Couldn't find timer with ID " + id + ".");
+            console.error("ERROR: Couldn't find timer with ID " + id + ", or it has been deleted.");
 
             return false;
         }
@@ -44,41 +46,45 @@ export class Plate extends EventEmitter {
 
     private done(id: string, wasPaused?: boolean) {
         if (this.timers[id]) {
-            if (this.verbose)
-                console.log("SUCCESSINFO: Timer with ID " + id + " is done.");
+            if (this.timers[id]) {
+                if (this.verbose)
+                    console.log("SUCCESSINFO: Timer with ID " + id + " is done.");
 
-            this.emit('fin', id);
+                this.emit('fin', id);
 
-            if (wasPaused) this.timers[id].rem = this.timers[id].set;
+                if (wasPaused) this.timers[id].rem = this.timers[id].set;
 
-            return true;
-        } else if (!this.timers[id].running) {
-            if (this.verbose) console.error("INFO: Timer with ID " + id + " is paused.");
+                return true;
+            } else if (!this.timers[id].running) {
+                if (this.verbose) console.error("INFO: Timer with ID " + id + " is paused.");
 
-            return false;
+                return false;
+            }
         } else {
-            console.error("ERROR: Couldn't find timer with ID " + id + ".");
+            console.error("ERROR: Couldn't find timer with ID " + id + ", or it has been deleted.");
 
             return false;
         }
     }
 
     res(id: string) {
-        if (!this.timers[id].running) {
-            this.add(id, this.timers[id].rem);
+        if (this.timers[id]) {
+            if (!this.timers[id].running) {
+                this.add(id, this.timers[id].rem);
 
-            if (this.verbose)
-                console.log("SUCCESSINFO: Resumed timer " + id + " with time remaining " + this.timers[id].rem + '.');
+                if (this.verbose)
+                    console.log("SUCCESSINFO: Resumed timer " + id + " with time remaining " + this.timers[id].rem + 'ms.');
 
-            this.emit('res', id);
+                this.emit('res', id);
 
-            return true;
-        } else if (this.timers[id].running) {
-            console.error("ERROR: Timer with ID " + id + " is already resumed.");
+                return true;
+            } else if (this.timers[id].running) {
+                console.error("ERROR: Timer with ID " + id + " is already resumed.");
 
-            return false;
+                return false;
+            }
         } else {
-            console.error("ERROR: Couldn't find timer with ID " + id + ".");
+            console.error("ERROR: Couldn't find timer with ID " + id + ", or it has been deleted.");
 
             return false;
         }
@@ -94,7 +100,7 @@ export class Plate extends EventEmitter {
 
             return true;
         } else {
-            console.error("ERROR: Couldn't find timer with ID " + id + ".");
+            console.error("ERROR: Couldn't find timer with ID " + id + ", or it has been deleted already.");
 
             return false;
         }
