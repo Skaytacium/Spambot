@@ -11,7 +11,7 @@ export class UIEvents extends EventEmitter {
         this.verbose = verbose;
 
         if (this.verbose) console.log(
-`INFO: Created a new user interface with prompt ${prompt ? prompt : '<none>'} and tabsize ${tabsize ? tabsize : 4}.`
+            `INFO: Created a new user interface with prompt ${prompt ? prompt : '<none>'} and tabsize ${tabsize ? tabsize : 4}.`
         );
 
         createInterface({
@@ -34,7 +34,7 @@ export class UIEvents extends EventEmitter {
                             if (this.verbose) console.log("INFO: Paused spamming, type resume or continue to resume.");
                             this.emit('pause', msg[1]);
 
-                        } else console.error("Provide an ID or specify 'all'.");
+                        } else console.error("ERROR: Provide an ID or specify 'all'.");
                         break;
 
                     case (commands.resume.includes(msg[0])):
@@ -43,7 +43,7 @@ export class UIEvents extends EventEmitter {
                             if (this.verbose) console.log("INFO: Resumed spamming.");
                             this.emit('res', msg[1]);
 
-                        } else console.error("Provide an ID.")
+                        } else console.error("ERROR: Provide an ID.")
                         break;
 
                     case (commands.add.includes(msg[0])):
@@ -52,7 +52,7 @@ export class UIEvents extends EventEmitter {
                             if (this.verbose) console.log("INFO: Added " + msg[1]);
                             this.emit('add', msg[1]);
 
-                        } else console.error("Provide an ID.")
+                        } else console.error("ERROR: Provide an ID.")
                         break;
 
                     case (commands.delete.includes(msg[0])):
@@ -61,7 +61,7 @@ export class UIEvents extends EventEmitter {
                             if (this.verbose) console.log("INFO: Removed " + msg[1]);
                             this.emit('del', msg[1]);
 
-                        } else console.error("Provide an ID or specify 'all'")
+                        } else console.error("ERROR: Provide an ID or specify 'all'")
                         break;
 
                     case (commands.help.includes(msg[0])):

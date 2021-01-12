@@ -16,7 +16,7 @@ export class Plate extends EventEmitter {
         this.timers[id] = new Timer(time);
         this.emit('add', [id, time]);
 
-        if (this.verbose) console.log("INFO: Added a new timer with ID " + id + " and time " + time + ".");//I felt like using +
+        if (this.verbose) console.log("INFO: Added a new timer with ID " + id + " and time " + time + "ms.");//I felt like using +
 
         //@ts-ignore You're right, but this scenario will never occur, SO SHUT UP
         return this.timers[id].start().then(() => this.done(id));

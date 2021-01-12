@@ -1,6 +1,6 @@
 import yargs from 'yargs/yargs';
 
-function parse(list: any[], allString?: boolean): { [key: string]: number } {
+function parse(list: (string | number)[], allString?: boolean): { [key: string]: number } {
     let tempObj: { [key: string]: number } = {};
 
     for (let i = 0; i < list.length; i++) {
@@ -9,7 +9,7 @@ function parse(list: any[], allString?: boolean): { [key: string]: number } {
             tempObj[list[i].toString()] = 0;
         }
 
-        else if (typeof list[i] == 'string') {
+        else if (typeof list[i] == 'string') { //@ts-ignore YOU HAVE TO BE JOKING BUDDY, NO WAY YOU'RE THIS DUMB
             if (typeof list[i + 1] == 'number') { tempObj[list[i]] = list[i + 1]; i++; }
 
             else tempObj[list[i]] = 0;
@@ -46,7 +46,7 @@ so that discord doesn't rate limit them. Also an alternative to definit in confi
             type: 'number'
         },
         "max": {
-            alias: "m",
+            alias: "x",
             describe: "(Not necessary) Set the maximum amount of messages to be sent. \
 Also acts as a limiter for --count.",
             type: 'number'
@@ -76,7 +76,9 @@ seeing too much text or it gives you a headache, don't use this.",
             alias: 'd',
             describe: "(Not recommended for non-devs) Turns off integration with discord and logs the \
 messages instead. This is also verbose by default. Unless you want to test stuff or your copy isn't working, \
-it's not recommended to set this option as it also enables pre-beta/nightly features and other arcane things."
+it's not recommended to set this option as it also enables pre-beta/nightly features and other arcane things. \
+Do not rely on this to even work at times.",
+            type: 'boolean'
         }
     })
     .coerce('list', list => parse(list, false))
@@ -88,8 +90,12 @@ it's not recommended to set this option as it also enables pre-beta/nightly feat
         if (!argv.suppress && !argv.time)
             console.error("WARNING: Didn't specify a --time parameter. Using defdelay in config.");
 
-        if (argv.start && !argv.count && (argv.list || argv.msg)) {
+        if (argv.start && !argv.count && (argv.list || argv.msg))
             console.error("WARNING: Specified --start with a message or list, there will be no effect.");
+
+        if (argv.debug) {
+            console.log("INFO: Starting in debug mode.")
+            argv.verbose = true;
         }
 
         return true;
