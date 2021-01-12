@@ -13,19 +13,23 @@ const client = new Client();
 
 client.login(token)
     .then(() => console.log("SUCCESS: Succesfully logged in."))
-    .catch(() => console.log("ERROR: Couldn't log in, check your credentials."));
+    .catch((res) => console.log(`ERROR: Couldn't log in, check your credentials.\
+${args.verbose ? `\n${res}` : ''}`));
 
 const messenger = new Messenger( //@ts-ignore DUDE I AM CHECKING IF ITS NULL IN ARGS.TS BUDDY HELLO TYPESCRIPT BRUH?
     args.list ? args.list : args.msg,
     args.verbose,
-    args.time ? args.time : undefined,
+    args.time,
+    args.init,
     args.count,
 );
 
 messenger.on('send', msg => {
-    store.channel.send(msg).then(sentmsg => {
-        if (args.verbose) console.log("SUCCESSINFO: Sent message " + sentmsg.content);
-    });
+    store.channel.send(msg)
+        .then(() => {
+            if (args.verbose)
+                console.log("SUCCESSINFO: Sent message " + msg + '.');
+        });
 });
 
 client.on('message', (message) => {
