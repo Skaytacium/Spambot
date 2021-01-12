@@ -1,3 +1,3 @@
-# For docs and general help
+# More like help me
 
 ## TODO

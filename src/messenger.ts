@@ -43,6 +43,8 @@ export class Messenger extends EventEmitter {
 
                 else if (!this.msgList[msg])
                     this.msgList[msg] = this.newTime;
+
+                else this.msgList[msg] *= 1000;
             }
         }
 
@@ -71,9 +73,13 @@ ${count ? "counting turned on." : "counting turned off."}`);
                     });
                     break;
                 case "add":
+                    delay = this.init;
+
                     console.log(this.newTime);
+
                     msgs.forEach(msg => {
-                        this.plate.add(msg, this.newTime);
+                        this.plate.add(msg, delay);
+                        delay += this.init;
                     });
                     break;
                 case "res":
