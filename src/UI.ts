@@ -32,7 +32,8 @@ export class UIEvents extends EventEmitter {
                         if (msg[1]) {
 
                             if (this.verbose) console.log("INFO: Paused spamming, type resume or continue to resume.");
-                            this.emit('pause', msg[1]);
+                            msg.splice(0, 1);
+                            this.emit('ui', 'pause', msg);
 
                         } else console.error("ERROR: Provide an ID or specify 'all'.");
                         break;
@@ -41,7 +42,8 @@ export class UIEvents extends EventEmitter {
                         if (msg[1]) {
 
                             if (this.verbose) console.log("INFO: Resumed spamming.");
-                            this.emit('res', msg[1]);
+                            msg.splice(0, 1);
+                            this.emit('ui', 'res', msg);
 
                         } else console.error("ERROR: Provide an ID.")
                         break;
@@ -50,7 +52,8 @@ export class UIEvents extends EventEmitter {
                         if (msg[1]) {
 
                             if (this.verbose) console.log("INFO: Added " + msg[1]);
-                            this.emit('add', msg[1]);
+                            msg.splice(0, 1);
+                            this.emit('ui', 'add', msg);
 
                         } else console.error("ERROR: Provide an ID.")
                         break;
@@ -59,7 +62,8 @@ export class UIEvents extends EventEmitter {
                         if (msg[1]) {
 
                             if (this.verbose) console.log("INFO: Removed " + msg[1]);
-                            this.emit('del', msg[1]);
+                            msg.splice(0, 1);
+                            this.emit('ui', 'del', msg);
 
                         } else console.error("ERROR: Provide an ID or specify 'all'")
                         break;

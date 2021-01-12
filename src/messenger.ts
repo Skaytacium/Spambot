@@ -11,6 +11,7 @@ export class Messenger extends EventEmitter {
     verbose;
     plate;
     ui;
+    newTime;
 
     constructor(
         paramList: { [key: string]: number },
@@ -25,6 +26,9 @@ export class Messenger extends EventEmitter {
         this.plate = new Plate(verbose);
         this.ui = new UIEvents(verbose);
 
+        this.newTime = time ? time : defdelay;
+        this.newTime *= 1000;
+
         this.init = init ? init : definit;
         this.init *= 1000;
 
@@ -38,7 +42,7 @@ export class Messenger extends EventEmitter {
                     this.msgList[msg] = times[msg] * 1000;
 
                 else if (!this.msgList[msg])
-                    this.msgList[msg] = (time ? time : defdelay) * 1000;
+                    this.msgList[msg] = this.newTime * 1000;
             }
         }
 
@@ -59,9 +63,35 @@ ${count ? "counting turned on." : "counting turned off."}`);
             delay += this.init;
         }
 
+        this.ui.on('ui', (event: string, msgs: string[]) => {
+            switch (event) {
+                case "pause":
+                    msgs.forEach(msg => {
+                        this.plate.pause(msg);
+                    });
+                    break;
+                case "add":
+                    console.log(this.newTime);
+                    msgs.forEach(msg => {
+                        this.plate.add(msg, this.newTime);
+                    });
+                    break;
+                case "res":
+                    msgs.forEach(msg => {
+                        this.plate.res(msg);
+                    });
+                    break;
+                case "del":
+                    msgs.forEach(msg => {
+                        this.plate.del(msg);
+                    });
+                    break;
+            }
+        });
+
         this.plate.on('fin', id => {
             this.emit('send', id); //@ts-ignore TYPESCRIPT YOU CAN SUCK MY D-
-            this.plate.add(id, this.msgList[id]);
+            this.plate.add(id, this.msgList[id] ? this.msgList[id] : this.newTime);
         });
     }
 }

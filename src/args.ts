@@ -36,7 +36,7 @@ in the config if specified, or the default time. Use '' or \"\" to include numbe
         "time": {
             alias: "t",
             describe: "(Not necessary) Time to wait between each message. \
-Also an alternative to defdelay in config.",
+Also an alternative to defdelay in config. This is also used for adding new messages.",
             type: 'number'
         },
         "init": {
@@ -75,8 +75,8 @@ seeing too much text or it gives you a headache, don't use this.",
         "debug": {
             alias: 'd',
             describe: "(Not recommended for non-devs) Turns off integration with discord and logs the \
-messages instead. This is also verbose by default. Unless you want to test stuff or your copy isn't working, \
-it's not recommended to set this option as it also enables pre-beta/nightly features and other arcane things. \
+messages instead. Unless you want to test stuff or your copy isn't working, it's not recommended \
+to set this option as it also enables pre-beta/nightly features and other arcane things. \
 Do not rely on this to even work at times.",
             type: 'boolean'
         }
@@ -88,15 +88,13 @@ Do not rely on this to even work at times.",
             throw new Error("ERROR: Required 1 or more arguments, 0 found. Provide a list, message or specify --count to count.");
 
         if (!argv.suppress && !argv.time)
-            console.error("WARNING: Didn't specify a --time parameter. Using defdelay in config.");
+            console.error("WARNING: Didn't specify a --time parameter. Using defdelay in config if new timers are added.");
 
         if (argv.start && !argv.count && (argv.list || argv.msg))
             console.error("WARNING: Specified --start with a message or list, there will be no effect.");
 
-        if (argv.debug) {
-            console.log("INFO: Starting in debug mode.")
-            argv.verbose = true;
-        }
+        if (argv.debug)
+            console.log("INFO: Starting in debug mode.");
 
         return true;
     })
