@@ -9,7 +9,7 @@ export function paramparse(list: string[], allString: boolean): { [key: string]:
             tempObj[list[i].toString()] = 0;
 
         else if (typeof list[i] == 'string') { //@ts-ignore YOU HAVE TO BE JOKING BUDDY, NO WAY YOU'RE THIS DUMB
-            if (parseFloat(list[i + 1])) { tempObj[list[i]] = parseFloat(list[i + 1]); i++; }
+            if (typeof list[i + 1] == 'number') { tempObj[list[i]] = list[i + 1]; i++; }
 
             else tempObj[list[i]] = 0;
         }
@@ -97,5 +97,7 @@ Do not rely on this to even work at times.",
 
         return true;
     })
+    .epilogue('https://github.com/Skaytacium/Spambot. \
+Fork, star and open a PR.')
     .help("help", "Shows available options.")
     .argv

@@ -1,6 +1,10 @@
 node_modules
 build
+*.log
+
+# Don't give out your config kids
 config/*
 !ex.*.jsonc
-*.log
+
+# Files which I use for new deps and stuff like that
 test.*

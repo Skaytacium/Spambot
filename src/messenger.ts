@@ -4,6 +4,7 @@ import { paramparse } from './args'
 import { Plate } from './plate'
 import { EventEmitter } from 'events'
 import { objsize } from './utils'
+import { send } from 'process'
 
 export class Messenger extends EventEmitter {
     msgList;
@@ -73,30 +74,27 @@ ${count ? "counting turned on." : "counting turned off."}`);
         this.ui.on('ui', (event: string, msgs: string[]) => {
             switch (event) {
                 case "pause":
-                    msgs.forEach(msg => {
-                        this.plate.pause(msg);
-                    });
+                    msgs.forEach(this.plate.pause);
                     break;
+
                 case "add":
                     delay = this.init;
                     let sendAdd = this.setDefaults(paramparse(msgs, false));
 
                     for (const msg in sendAdd) {
-                        this.plate.add(msg, delay);
+                        this.plate.add(msg, delay).then(() => { //@ts-ignore Heard of not being a little shit sometimes?
+                            this.msgList[msg] = sendAdd[msg];
+                        });
                         delay += this.init;
                     }
+                    break;
 
-                    this.msgList = sendAdd;
-                    break;
                 case "res":
-                    msgs.forEach(msg => {
-                        this.plate.res(msg);
-                    });
+                    msgs.forEach(this.plate.res);
                     break;
+
                 case "del":
-                    msgs.forEach(msg => {
-                        this.plate.del(msg);
-                    });
+                    msgs.forEach(this.plate.del);
                     break;
             }
         });
