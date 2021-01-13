@@ -1,16 +1,15 @@
-import yargs from 'yargs/yargs';
+import yargs from 'yargs/yargs'
 
-function parse(list: (string | number)[], allString?: boolean): { [key: string]: number } {
+export function paramparse(list: string[], allString: boolean): { [key: string]: number } {
     let tempObj: { [key: string]: number } = {};
 
     for (let i = 0; i < list.length; i++) {
 
-        if (allString) {
+        if (allString)
             tempObj[list[i].toString()] = 0;
-        }
 
         else if (typeof list[i] == 'string') { //@ts-ignore YOU HAVE TO BE JOKING BUDDY, NO WAY YOU'RE THIS DUMB
-            if (typeof list[i + 1] == 'number') { tempObj[list[i]] = list[i + 1]; i++; }
+            if (parseFloat(list[i + 1])) { tempObj[list[i]] = parseFloat(list[i + 1]); i++; }
 
             else tempObj[list[i]] = 0;
         }
@@ -81,8 +80,8 @@ Do not rely on this to even work at times.",
             type: 'boolean'
         }
     })
-    .coerce('list', list => parse(list, false))
-    .coerce('msg', msgs => parse(msgs, true))
+    .coerce('list', list => paramparse(list, false))
+    .coerce('msg', msgs => paramparse(msgs, true))
     .check(argv => {
         if (!argv.list && !argv.msg && !argv.count)
             throw new Error("ERROR: Required 1 or more arguments, 0 found. Provide a list, message or specify --count to count.");

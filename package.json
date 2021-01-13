@@ -1,6 +1,6 @@
 {
   "name": "spambot",
-  "version": "1.3.2",
+  "version": "1.5.1",
   "description": "Skaytacium's spambot",
   "main": "index.ts",
   "author": "Skaytacium",

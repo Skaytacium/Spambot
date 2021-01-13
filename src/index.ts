@@ -34,7 +34,7 @@ messenger.on('send', msg => {
                 if (args.verbose)
                     console.log("SUCCESSINFO: Sent message " + msg + '.');
             });
-    else console.log("INFO: Send event emitted " + msg + ".")
+    else console.log("DEBUG: Send event emitted " + msg + ".")
 });
 
 if (!args.debug)

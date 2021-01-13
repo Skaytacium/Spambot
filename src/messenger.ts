@@ -1,8 +1,9 @@
 import { times, defdelay, definit } from '../config/config.json'
 import { UIEvents } from './UI'
+import { paramparse } from './args'
 import { Plate } from './plate'
-import { EventEmitter } from 'events';
-import { objsize } from './utils';
+import { EventEmitter } from 'events'
+import { objsize } from './utils'
 
 export class Messenger extends EventEmitter {
     msgList;
@@ -34,25 +35,29 @@ export class Messenger extends EventEmitter {
 
         if (count) this.count = count;
 
-        else {
-            this.msgList = paramList;
-
-            for (let msg in paramList) {
-                if (msg in times) //@ts-ignore TYPESCRIPT YOU USELESS EXTRA BULKY SHIT
-                    this.msgList[msg] = times[msg] * 1000;
-
-                else if (!this.msgList[msg])
-                    this.msgList[msg] = this.newTime;
-
-                else this.msgList[msg] *= 1000;
-            }
-        }
+        else this.msgList = this.setDefaults(paramList);
 
         if (this.verbose) console.log( //@ts-ignore yeah ok this is right but i'll change this later
             `INFO: Created a new message manager with ${count ? "" : `${objsize(this.msgList)} message(s), `}
     a default time of ${time ? `${time}s` : `defdelay (${defdelay}s)`}, \
 initializing time of ${this.init}ms and \
 ${count ? "counting turned on." : "counting turned off."}`);
+    }
+
+    private setDefaults(parsedParams: { [key: string]: number }) {
+        let tempObj: { [key: string]: number } = {};
+
+        for (let msg in parsedParams) {
+            if (msg in times)   //@ts-ignore TYPESCRIPT YOU USELESS EXTRA BULKY SHIT
+                tempObj[msg] = times[msg] * 1000;
+
+            else if (parsedParams[msg])
+                tempObj[msg] = Math.abs(parsedParams[msg]) * 1000;
+
+            else tempObj[msg] = this.newTime;
+        }
+
+        return tempObj;
     }
 
     start() {
@@ -74,13 +79,14 @@ ${count ? "counting turned on." : "counting turned off."}`);
                     break;
                 case "add":
                     delay = this.init;
+                    let sendAdd = this.setDefaults(paramparse(msgs, false));
 
-                    console.log(this.newTime);
-
-                    msgs.forEach(msg => {
+                    for (const msg in sendAdd) {
                         this.plate.add(msg, delay);
                         delay += this.init;
-                    });
+                    }
+
+                    this.msgList = sendAdd;
                     break;
                 case "res":
                     msgs.forEach(msg => {
@@ -96,7 +102,7 @@ ${count ? "counting turned on." : "counting turned off."}`);
         });
 
         this.plate.on('fin', id => {
-            this.emit('send', id); //@ts-ignore TYPESCRIPT YOU CAN SUCK MY D-
+            this.emit('send', id); //@ts-ignore TYPESCRIPT YOU CAN COMMIT SUICIDE
             this.plate.add(id, this.msgList[id] ? this.msgList[id] : this.newTime);
         });
     }
