@@ -5,8 +5,8 @@
 ### Requirements
 
 - Node.js
+- NPM/Yarn
 - Babel
-- Yarn (Optional)
 
 ### Description
 
