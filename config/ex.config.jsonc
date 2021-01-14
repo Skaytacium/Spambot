@@ -1,16 +1,24 @@
-//Save this file as `config.json` exactly.
-
+//Save as config.json exactly, without any comments.
 {
     "token": "YOUR BOT'S TOKEN HERE",
     "start": "here we go",
     "defdelay": 60,
+    "definit": 0.5,
     "options": {
-        //TODO
+        // TODO
     },
     "times": {
         //times for specific messages, for eg. if you want to send
-        //the message "sad" every 5 seconds by default, add
+        //the message "sad" every 5 seconds by default, add -
         //"sad": 60
-        //and so on
+        //and so on.
+    },
+    "commands": { //You can configure real time UI commands here.
+        "exit": ["stop", "leave", "exit", "end", "kill", "q", "c"],
+        "pause": ["pause", "halt", "wait", "p"],
+        "resume": ["resume", "continue", "res", "cont", "r"],
+        "add": ["add", "include", "a"],
+        "delete": ["delete", "subtract", "remove", "del", "rem", "d"],
+        "help": ["show", "help", "list", "available", "info", "commands", "h"]
     }
 }
