@@ -16,7 +16,7 @@ The most powerful and elegant discord.js spambot. It has features ranging from s
 
 1. Clone the repository with `git clone https://github.com/Skaytacium/Spambot.git`.
 2. Change into the directory and open a shell.
-3. Run `npm` or `yarn` depending on which one you use.
+3. Run `npm i` or `yarn` depending on which one you use.
 4. How to compile to javascript:
     - npm users: `npx babel src -d build -x .ts`
     - yarn users: `yarn babel src -d build -x .ts`
